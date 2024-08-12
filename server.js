@@ -2,10 +2,7 @@
 
 const express = require('express');
 const server = express();
-// const data = require('./Data/friends.json');
-// console.log(data);
-const fs = require('fs');
-const data = fs.readFileSync("./Data/friends.json", "utf-8");
+const data = require('./Data/friends.json');
 
 const morgan = require('morgan');
 
