@@ -34,7 +34,7 @@ app.get('/post', (req, res) => {
 app.get('/user', (req, res) => {
     res.json(users);
 })
-/* --------------------------- Get Single Post & User --------------------------- */
+/* --------------------------- Get Single Post & User - Read --------------------------- */
 app.get('/post/:id', (req, res) => {
     let id = +req.params.id;
     let item = posts.find((post)=>post.id === id);
@@ -44,6 +44,47 @@ app.get('/user/:id', (req, res) => {
     let id = +req.params.id;
     let singleUser = users.find((users)=>users.id === id);
     res.json(singleUser);
+})
+/* --------------------------- Replace Data - PUT --------------------------- */
+app.put('/post/:id', (req, res) => {
+    let id = +req.params.id;
+    let postIndex = posts.findIndex((post)=>post.id === id);
+    posts.splice(postIndex, 1, {...req.body});
+    res.json({message : 'Post Replaced Success'});
+})
+app.put('/user/:id', (req, res) => {
+    let id = +req.params.id;
+    let userIndex = users.findIndex((user)=>user.id === id);
+    users.splice(userIndex, 1, {...req.body});
+    res.json({message : 'User Replaced Success'});
+})
+/* --------------------------- Update Data - PATCH -------------------------- */
+app.patch('/post/:id', (req, res) => {
+    let id = +req.params.id;
+    let postIndex = posts.findIndex((posts)=>posts.id === id);
+    const post = posts[postIndex];
+    posts.splice(postIndex, 1, {...post,...req.body});
+    res.json({message : 'Post Update Success'});
+})
+app.patch('/user/:id', (req, res) => {
+    let id = +req.params.id;
+    let userIndex = users.findIndex((users)=>users.id === id);
+    const user = users[userIndex]
+    users.splice(userIndex, 1, {...user,...req.body});
+    res.json({message : 'User Update Success'});
+})
+/* -------------------------- Delete Data - DELETE -------------------------- */
+app.delete('/post/:id', (req, res) => {
+    let id = +req.params.id;
+    let postIndex = posts.findIndex((post)=>post.id === id);
+    posts.splice(postIndex, 1,);
+    res.json({message : 'Post Deleted Success'});
+})
+app.delete('/user/:id', (req, res) => {
+    let id = +req.params.id;
+    let userIndex = users.findIndex((user)=>user.id === id);
+    users.splice(userIndex, 1,);
+    res.json({message : 'Post Deleted Success'});
 })
 
 /* ------------------------------ Server Start ------------------------------ */
