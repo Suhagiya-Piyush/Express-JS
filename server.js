@@ -1,9 +1,11 @@
-/*// todo -------------------------------- Lesson 3 (07/08/24)-------------------------------- */
+/*// todo -------------------------------- Lesson 4 (08/08/24)-------------------------------- */
 
 const express = require('express');
 const server = express();
-const data = require('./Data/friends.json');
+// const data = require('./Data/friends.json');
 // console.log(data);
+const fs = require('fs');
+const data = fs.readFileSync("./Data/friends.json", "utf-8");
 
 const morgan = require('morgan');
 
@@ -32,15 +34,16 @@ let loggerFun = (req, res, next) => {
 }
 server.use(loggerFun)
 
-/* ---------------------------- Application Level --------------------------- */
+/* ---------------------------- Application Level Middelware--------------------------- */
 // server.use(middelware);
 
+/* ------------------------------ Router Level Middelware------------------------------ */
 server.get('/',middelware, (req, res) => {
     res.send({message : 'Welcome to Express Server'});
 });
 
 server.get('/friend', (req, res) => {
-    res.json(data);
+    res.json(JSON.parse(data));
 });
 
 server.listen(1234, () => {
