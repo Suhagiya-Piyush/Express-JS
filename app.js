@@ -1,4 +1,4 @@
-/*// todo -------------------------------- Lesson 7 (10/08/24)-------------------------------- */
+/*// todo -------------------------------- Lesson 8 (12/08/24)-------------------------------- */
 
 /* ----------------------------- Import Express ----------------------------- */
 const express = require('express');
@@ -6,20 +6,26 @@ const express = require('express');
 const app = express();
 /* ------------------------------ Import Morgam ----------------------------- */
 const morgan = require('morgan');
+/* ----------------------------- Import Mongoose ---------------------------- */
+const mongoose = require('mongoose');
 
-const postRoute = require('./routes/post.routes');
-const userRoute = require('./routes/post.routes');
+// Database Connection
+mongoose
+    .connect("mongodb://127.0.0.1:27017/users")
+    .then(() => console.log('Database connection established successfully...'))
+    .catch(err=>console.log(err));
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended : true}));
 app.use(morgan('dev'));
 
-app.get("/", (req, res) => {
-    res.send('Welcome to express Server');
+app.get('/', (req,res) => {
+    res.send('Welcome to Express Srver');
 })
 
-app.use('/api/post', postRoute);
-app.use('/api/user', userRoute);
+const userRoutes = require("./routes/post.routes");
+
+app.use("/api/user", userRoutes);
 
 /* ------------------------------ Server Start ------------------------------ */
 app.listen(1234, () => {
