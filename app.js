@@ -1,5 +1,6 @@
 /*// todo -------------------------------- Lesson 8 (12/08/24)-------------------------------- */
 
+require('dotenv').config();
 /* ----------------------------- Import Express ----------------------------- */
 const express = require('express');
 /* ------------------------------ Create server / App ----------------------------- */
@@ -8,10 +9,11 @@ const app = express();
 const morgan = require('morgan');
 /* ----------------------------- Import Mongoose ---------------------------- */
 const mongoose = require('mongoose');
+const port = process.env.PORT
 
 // Database Connection
 mongoose
-    .connect("mongodb://127.0.0.1:27017/users")
+    .connect(process.env.MONGO_URI)
     .then(() => console.log('Database connection established successfully...'))
     .catch(err=>console.log(err));
 
@@ -28,6 +30,6 @@ const userRoutes = require("./routes/post.routes");
 app.use("/api/user", userRoutes);
 
 /* ------------------------------ Server Start ------------------------------ */
-app.listen(1234, () => {
-    console.log('Server start at http://localhost:1234');
+app.listen(port, () => {
+    console.log(`Server start at http://localhost:${port}`);
 });
