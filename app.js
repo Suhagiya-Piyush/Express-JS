@@ -25,11 +25,11 @@ app.get('/', (req,res) => {
     res.send('Welcome to Express Srver');
 })
 
-const userRoutes = require("./routes/post.routes");
-const productRoutes = require("./routes/product.routes");
+const userRoutes = require("./routes/user.routes");
+// const productRoutes = require("./routes/product.routes");
 
 app.use("/api/user", userRoutes);
-app.use("/api/product", productRoutes);
+// app.use("/api/product", productRoutes);
 
 /* ------------------------------ Server Start ------------------------------ */
 app.listen(port, () => {

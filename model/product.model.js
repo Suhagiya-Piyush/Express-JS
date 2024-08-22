@@ -3,15 +3,19 @@ const mongoose = require('mongoose');
 const productSchema = mongoose.Schema({
     title : {
         type : String,
+        required : true
     },
     description : {
-        type : String
+        type : String,
+        required : true
     },
     category : {
-        type : String
+        type : String,
+        required : true
     },
     price : {
-        type : Number
+        type : Number,
+        required : true
     },
     discountPercentage : {
         type : Number
@@ -20,16 +24,20 @@ const productSchema = mongoose.Schema({
         type : Number
     },
     stock : {
-        type : Number
+        type : Number,
+        required : true
     },
     tags : [{
-        type : String
+        type : String,
+        required : true
     }],
     brand : {
-        type : String
+        type : String,
+        required : true
     },
     sku : {
-        type : String
+        type : String,
+        required : true
     },
     isDelete:{
         type : Boolean,
