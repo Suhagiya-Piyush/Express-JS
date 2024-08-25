@@ -47,7 +47,46 @@ exports.userProfile = async (req, res) => {
   try {
     const {user} = req;
     res.status(200).json(user);
-    
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error..." });
+  }
+}
+exports.updateUser = async (req, res) => {
+  try {
+    let user = req.user;
+    user = await User.findByIdAndUpdate(user._id, {$set : req.body}, {new : true});
+    res.status(202).json({user, message : 'User update success'});
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error..." });
+  }
+}
+exports.deleteUser = async (req, res) => {
+  try {
+    let user = req.user;
+    user = await User.findByIdAndUpdate(user._id, {isDelete : true}, {new : true});
+    res.status(202).json({user, message : 'User Delete success'});
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error..." });
+  }
+}
+exports.updatePassword = async (req, res) => {
+  try {
+    let user = req.user;
+    let {currentPassword, newPassword, confirmPassword} = req.body;
+    let checkOldPassword = await bcrypt.compare(currentPassword, user.password);
+    if (!checkOldPassword ){
+      return res
+        .status(400)
+        .json({ message: "Current Password not Match..." });}
+    if(newPassword !== confirmPassword){
+      res.status(400).json({message : "Both Password aren't Same!..."});
+    }
+    let hashPassword = await bcrypt.hashSync(confirmPassword, 10);
+    user = await User.findByIdAndUpdate(user._id, {$set :{password : hashPassword}}, {new : true});
+    res.status(202).json({user, message : 'Password Update success'});
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error..." });
