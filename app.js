@@ -1,5 +1,3 @@
-/*// todo -------------------------------- Lesson 8 (12/08/24)-------------------------------- */
-
 require('dotenv').config();
 /* ----------------------------- Import Express ----------------------------- */
 const express = require('express');
@@ -9,7 +7,8 @@ const app = express();
 const morgan = require('morgan');
 /* ----------------------------- Import Mongoose ---------------------------- */
 const mongoose = require('mongoose');
-const port = process.env.PORT
+const port = process.env.PORT;
+const path = require('path');
 
 // Database Connection
 mongoose
@@ -20,6 +19,7 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 app.use(morgan('dev'));
+app.use("/public/images", express.static(path.join(__dirname, 'public/images')));
 
 app.get('/', (req,res) => {
     res.send('Welcome to Express Srver');

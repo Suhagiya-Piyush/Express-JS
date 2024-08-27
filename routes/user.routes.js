@@ -2,8 +2,9 @@ const express = require('express');
 const {registerUser, loginUser, userProfile, updateUser, deleteUser, updatePassword} = require('../controller/user.controller');
 const userRoutes = express.Router(); 
 const {verifyToken} = require('../helpers/tokenVerify');
+const { upload } = require('../helpers/imageUpload');
 
-userRoutes.post("/register", registerUser);
+userRoutes.post("/register",upload.single('profileImage'), registerUser);
 userRoutes.post("/login", loginUser);
 
 userRoutes.get("/profile", verifyToken, userProfile);

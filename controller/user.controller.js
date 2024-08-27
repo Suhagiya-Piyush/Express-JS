@@ -11,10 +11,14 @@ const {getFormattedTimestamp} = require('../service/timeStamp');
 // Registration
 exports.registerUser = async (req, res) => {
   try {
+    let imagePath = '';
     let user = await User.findOne({ email: req.body.email, isDelete: false });
     if (user) return res.status(400).json({ message: "User already Exist..." });
+    if(req.file){
+      imagePath = req.file.path.replace(/\\/g, '/');
+    }
     let hashPassword = await bcrypt.hash(req.body.password, 10);
-    user = await User.create({ ...req.body, password: hashPassword });
+    user = await User.create({ ...req.body, password: hashPassword, profileImage : imagePath });
     user.save();
     res.status(201).json({ user, message: "User Registration Success" });
   } catch (error) {
