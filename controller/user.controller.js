@@ -96,3 +96,20 @@ exports.updatePassword = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error..." });
   }
 }
+exports.viewUsers = async (req, res) =>{
+  try {
+    // const user = {
+    //   "firstName" : "Piyush",
+    //   "lastName" : "Suhagiya",
+    //   "email" : "piyush@test.in",
+    //   "mobileNo" : "+919904765380",
+    //   "age" : 29
+    // }
+    let user =await User.findOne({firstName : req.query.name, isDelete : false});
+    if(!user) return res.json({message : 'User Not found...'});
+    res.render('viewUser.hbs', { user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error..." });
+  }
+}

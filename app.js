@@ -9,12 +9,16 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const port = process.env.PORT;
 const path = require('path');
+const ejs = require('ejs');
+const hbs = require('hbs');
 
 // Database Connection
 mongoose
     .connect(process.env.MONGO_URI)
     .then(() => console.log('Database connection established successfully...'))
     .catch(err=>console.log(err));
+
+app.set('view engine', 'hbs');
 
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
