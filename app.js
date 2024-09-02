@@ -30,9 +30,11 @@ app.get('/', (req,res) => {
 })
 
 const userRoutes = require("./routes/user.routes");
+const cartsRoutes = require('./routes/cart.routes');
 // const productRoutes = require("./routes/product.routes");
 
 app.use("/api/user", userRoutes);
+app.use("/api/cart", cartsRoutes);
 // app.use("/api/product", productRoutes);
 
 /* ------------------------------ Server Start ------------------------------ */
